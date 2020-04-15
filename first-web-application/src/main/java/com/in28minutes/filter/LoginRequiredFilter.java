@@ -25,8 +25,11 @@ public class LoginRequiredFilter implements Filter {
 			throws IOException, ServletException {
 			HttpServletRequest request = (HttpServletRequest) servletRequest;
 			System.out.println(request.getRequestURI());
-			
-			if(request.getSession().getAttribute("name")!= null) { 
+			if(request.getRequestURI().equals("/signUp.do")) {
+				chain.doFilter(request, servletResponse);
+				request.getRequestDispatcher("/WEB-INF/views/signUp.jsp");
+				
+			}else if(request.getSession().getAttribute("name")!= null) { 
 				chain.doFilter(servletRequest, servletResponse);
 			}else {
 				request.getRequestDispatcher("/login.do").forward(servletRequest, servletResponse);
